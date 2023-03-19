@@ -1,0 +1,89 @@
+# i3status
+
+# Optimized configuration for 1366x768 screens with
+# all the information that I care (marcosdly).
+# see https://github.com/marcosdly/i3wm
+
+
+general {
+  output_format = "i3bar"
+  colors = true
+  interval = 5
+  separator = "|"
+}
+
+order += "disk /"
+order += "disk /home"
+order += "wireless wlp1s0"
+order += "ethernet enp2s0"
+order += "cpu_usage"
+order += "cpu_temperature 0" 
+order += "memory" 
+order += "volume master" 
+order += "battery all"
+order += "time" 
+
+disk / {
+  prefix_type = "binary"
+  threshold_type = "gbytes_avail"
+  low_threshold = 20
+  format = "root: %used/%avail"
+  # root: 18% 13Gi/50Gi
+}
+
+
+disk /home {
+  prefix_type = "binary"
+  threshold_type = "gbytes_avail"
+  low_threshold = 20
+  # format = "home: %percentage_used"
+  format = "home: %used/%avail"
+  # home: 18% 13Gi/50Gi
+}
+
+wireless wlp1s0 {
+  format_down = "wlan: down"
+  format_up = "wlan:%quality %essid"
+}
+
+ethernet enp2s0 {
+  format_down = "eth: down"
+  format_up = "eth: $speed"
+}
+
+cpu_usage {
+  format = "CPU: %usage"
+  max_threshold = 80
+}
+
+cpu_temperature 0 {
+  format = "%degrees°C"
+}
+
+memory {
+ format = "RAM: %percentage_used"
+ threshold_critical = 80
+}
+
+volume master {
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+  format = "Vol: %volume"
+  format_muted = "Vold: %devicename muted"
+}
+
+battery all {
+  format_down = "BAT: no battery"
+  format = "BAT: %status %remaining (%consumption)"
+  low_threshold = 30
+  threshold_type = "percentage"
+  status_chr = "⚡"
+  status_bat = "🔋"
+  status_unk = "❓"
+  status_full = "👍"
+}
+
+time {
+  format = "%d/%m/%Y %H:%M"
+}
